@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trisha Gupta — Consultant & Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #07192E;
+  --navy-2: #0E2540;
+  --navy-3: #163354;
+  --teal: #1D9E75;
+  --teal-bright: #25C491;
+  --teal-mid: #12704F;
+  --teal-pale: rgba(29,158,117,0.08);
+  --cream: #F5F3ED;
+  --cream-2: #EDE9E0;
+  --white: #FFFFFF;
+  --ink: #1A1A1A;
+  --slate: #5C6478;
+  --slate-light: #8B95A7;
+  --border: rgba(7,25,46,0.07);
+  --border-mid: rgba(7,25,46,0.12);
+  --teal-border: rgba(29,158,117,0.18);
+  --ff-display: 'Cormorant Garamond', serif;
+  --ff-body: 'DM Sans', sans-serif;
+  --ff-mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--ff-body);
+  background: var(--cream);
+  color: var(--navy);
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── CURSOR ── */
+#cur, #cur-ring {
+  position: fixed; pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  transition: width .25s ease, height .25s ease, background .25s ease, border-color .25s ease, opacity .3s ease;
+}
+#cur { width: 7px; height: 7px; background: var(--teal); }
+#cur-ring { width: 30px; height: 30px; border: 1px solid rgba(29,158,117,.35); background: transparent; z-index: 9998; }
+body.cursor-hover #cur { width: 12px; height: 12px; }
+body.cursor-hover #cur-ring { width: 52px; height: 52px; border-color: rgba(29,158,117,.5); }
+body.cursor-dark #cur { background: var(--teal-bright); }
+body.cursor-dark #cur-ring { border-color: rgba(37,196,145,.4); }
+
+/* ── NAV ──
+   Heuristic: Consistency & standards (Nielsen #4).
+   Nav is ALWAYS opaque cream — never transparent — so text contrast
+   is predictable regardless of what section sits beneath it.
+   Only padding and shadow change on scroll, never background colour.
+─────────────────────────────────────────────────────────────────── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 64px;
+  /* Always opaque — no colour-flip on scroll */
+  background: var(--cream);
+  border-bottom: 1px solid transparent;
+  transition: padding .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+#nav.stuck {
+  padding: 14px 64px;
+  border-bottom-color: var(--border);
+  box-shadow: 0 2px 16px rgba(7,25,46,.06);
+}
+/* Logo — navy on cream, always ≥ 4.5:1 contrast ratio */
+.nav-logo {
+  font-family: var(--ff-display); font-size: 30px; font-weight: 600;
+  color: var(--navy); text-decoration: none; letter-spacing: .02em;
+  line-height: 1;
+}
+/* Nav links — body sans, uppercase label style, min 12px */
+.nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: var(--ff-body); font-size: 12px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--slate); text-decoration: none;
+  transition: color .18s ease;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-links a:hover { color: var(--navy); }
+.nav-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--teal); opacity: 0;
+  transition: opacity .18s ease; flex-shrink: 0;
+}
+.nav-links a.active { color: var(--navy); }
+.nav-links a.active .nav-dot { opacity: 1; }
+
+/* CV download button — secondary action, outlined */
+.nav-cv {
+  font-family: var(--ff-body); font-size: 11px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 8px 18px;
+  border: 1px solid var(--border-mid);
+  color: var(--slate); border-radius: 2px; text-decoration: none;
+  display: flex; align-items: center; gap: 7px;
+  transition: border-color .18s ease, color .18s ease, background .18s ease;
+  cursor: pointer; background: transparent;
+}
+.nav-cv:hover { border-color: var(--navy); color: var(--navy); background: rgba(7,25,46,.04); }
+.nav-cv svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* Primary CTA — teal bordered */
+.nav-contact {
+  font-family: var(--ff-body); font-size: 12px; font-weight: 500;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 9px 22px; border: 1px solid var(--teal);
+  color: var(--teal); border-radius: 2px; text-decoration: none;
+  transition: background .18s ease, color .18s ease;
+}
+.nav-contact:hover { background: var(--teal); color: #fff; }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh; background: var(--navy);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 64px 72px; position: relative; overflow: hidden;
+}
+.hero-mesh {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 60% at 75% 20%, rgba(29,158,117,.11) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 15% 80%, rgba(29,158,117,.06) 0%, transparent 60%);
+}
+.hero-grid-lines {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+/* animated teal line accent */
+.hero-accent-line {
+  position: absolute; left: 64px; top: 50%; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--teal), transparent);
+  height: 200px; margin-top: -100px;
+  opacity: .35;
+  animation: linePulse 4s ease-in-out infinite;
+}
+@keyframes linePulse {
+  0%,100% { opacity: .2; transform: scaleY(1); }
+  50% { opacity: .5; transform: scaleY(1.2); }
+}
+
+.hero-eyebrow {
+  font-family: var(--ff-mono); font-size: 12px; letter-spacing: .22em; font-weight: 400;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 42px;
+  opacity: 0; animation: slideUp .7s .3s ease forwards;
+}
+.hero-headline {
+  font-family: var(--ff-display); font-weight: 300; line-height: .92;
+  color: #fff; margin-bottom: 56px;
+  font-size: clamp(68px, 9.5vw, 140px);
+  opacity: 0; animation: slideUp .85s .5s ease forwards;
+}
+.hero-headline em { font-style: italic; color: var(--teal-bright); }
+.hero-headline .indent { display: block; padding-left: clamp(80px, 10vw, 160px); }
+
+.hero-lower {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
+  opacity: 0; animation: slideUp .85s .75s ease forwards;
+}
+.hero-intro {
+  max-width: 400px; font-size: 14px; font-weight: 300; line-height: 1.85;
+  color: rgba(255,255,255,.55);
+}
+.hero-intro strong { color: rgba(255,255,255,.85); font-weight: 400; }
+.hero-proof { display: flex; gap: 48px; }
+.hp-num {
+  font-family: var(--ff-display); font-size: 44px; font-weight: 300;
+  color: #fff; line-height: 1;
+}
+.hp-label {
+  font-size: 10px; font-weight: 300; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.35); margin-top: 7px; line-height: 1.5;
+}
+
+.scroll-indicator {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  opacity: 0; animation: fadeIn .9s 1.3s ease forwards;
+}
+.scroll-indicator span {
+  font-family: var(--ff-mono); font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(255,255,255,.25);
+}
+.scroll-bar {
+  width: 1px; height: 52px;
+  background: linear-gradient(to bottom, var(--teal) 0%, transparent 100%);
+  animation: barDrop 2.2s ease-in-out infinite;
+}
+@keyframes barDrop { 0%,100%{opacity:.3;transform:scaleY(1)} 55%{opacity:.9;transform:scaleY(1.15)} }
+@keyframes slideUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { to{opacity:1} }
+
+/* ── TICKER ── */
+.ticker-wrap {
+  overflow: hidden; background: var(--cream-2);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 17px 0;
+}
+.ticker-track {
+  display: flex; gap: 0; white-space: nowrap;
+  animation: ticker 30s linear infinite;
+}
+.ticker-item {
+  flex-shrink: 0; padding: 0 28px;
+  font-family: var(--ff-mono); font-size: 10px; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(7,25,46,.32);
+}
+.ticker-sep { color: var(--teal); padding: 0 4px; }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── ABOUT ── */
+#about {
+  background: var(--cream); padding: 132px 64px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start;
+}
+.sec-label {
+  font-family: var(--ff-mono); font-size: 16px; letter-spacing: .22em; font-weight: 400;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 18px;
+}
+.sec-title {
+  font-family: var(--ff-display); font-weight: 500; line-height: 1.08;
+  font-size: clamp(34px, 3.5vw, 52px); color: var(--navy);
+}
+.sec-title em { font-style: italic; color: var(--teal); }
+
+.about-pull {
+  font-family: var(--ff-display); font-size: clamp(20px, 2vw, 28px);
+  font-weight: 300; line-height: 1.6; color: var(--navy); margin-top: 30px;
+}
+.about-pull em { font-style: italic; color: var(--teal); border-bottom: 1px solid rgba(29,158,117,.25); }
+
+.about-body {
+  font-size: 14px; font-weight: 300; line-height: 1.95; color: var(--slate); margin-bottom: 24px;
+}
+.about-body strong { color: var(--navy); font-weight: 500; }
+.about-right { padding-top: 56px; }
+
+.chip-cloud { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 28px; }
+.chip {
+  font-size: 11px; padding: 5px 13px; border-radius: 2px;
+  border: 1px solid var(--teal-border); color: var(--teal-mid);
+  background: var(--teal-pale); letter-spacing: .04em;
+}
+
+/* ── NUMBERS ── */
+#numbers {
+  background: var(--navy); padding: 80px 0;
+  display: grid; grid-template-columns: repeat(4,1fr);
+}
+.num-cell {
+  padding: 40px 48px; border-right: 1px solid rgba(255,255,255,.05);
+  position: relative; overflow: hidden;
+}
+.num-cell::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(29,158,117,.05) 0%, transparent 60%);
+  opacity: 0; transition: opacity .4s;
+}
+.num-cell:hover::before { opacity: 1; }
+.num-cell:last-child { border-right: none; }
+.num-val {
+  font-family: var(--ff-display); font-size: 52px; font-weight: 300;
+  color: #fff; line-height: 1; margin-bottom: 10px;
+}
+.num-val .u { font-size: 26px; color: var(--teal); }
+.num-desc { font-size: 12px; font-weight: 300; color: rgba(255,255,255,.38); line-height: 1.55; letter-spacing: .02em; }
+
+/* ── WORK ── */
+#work { padding: 132px 64px; background: var(--cream); }
+.work-hd {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 72px;
+}
+.work-count {
+  font-family: var(--ff-display); font-size: 88px; font-weight: 300;
+  color: rgba(7,25,46,.06); line-height: 1; user-select: none;
+}
+
+/* project rows */
+.proj-row {
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.proj-row:last-child { border-bottom: 1px solid var(--border); }
+
+.proj-trigger {
+  display: grid; grid-template-columns: 56px 1fr auto;
+  gap: 36px; align-items: start;
+  padding: 44px 0; cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.proj-trigger::before {
+  content: ''; position: absolute; inset: 0 -64px;
+  background: var(--navy); opacity: 0;
+  transition: opacity .3s ease; z-index: 0;
+}
+.proj-trigger:hover::before { opacity: 1; }
+.proj-trigger > * { position: relative; z-index: 1; }
+
+.proj-num {
+  font-family: var(--ff-mono); font-size: 11px; color: var(--slate-light);
+  padding-top: 5px; transition: color .3s;
+}
+.proj-trigger:hover .proj-num { color: rgba(255,255,255,.3); }
+
+.proj-tag {
+  font-family: var(--ff-mono); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 10px;
+  transition: color .3s;
+}
+.proj-trigger:hover .proj-tag { color: var(--teal-bright); }
+
+.proj-name {
+  font-family: var(--ff-display); font-size: clamp(22px, 2.2vw, 33px);
+  font-weight: 400; color: var(--navy); margin-bottom: 10px;
+  line-height: 1.15; transition: color .3s;
+}
+.proj-trigger:hover .proj-name { color: #fff; }
+
+.proj-client {
+  font-size: 11px; font-weight: 300; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--slate-light); margin-bottom: 14px; transition: color .3s;
+}
+.proj-trigger:hover .proj-client { color: rgba(255,255,255,.3); }
+
+.proj-brief {
+  font-size: 13px; font-weight: 300; line-height: 1.75; color: var(--slate);
+  max-width: 540px; transition: color .3s;
+}
+.proj-trigger:hover .proj-brief { color: rgba(255,255,255,.45); }
+
+.proj-chips { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.proj-chip {
+  font-family: var(--ff-mono); font-size: 10px; color: var(--teal-mid);
+  padding: 3px 0; transition: color .3s;
+}
+.proj-trigger:hover .proj-chip { color: var(--teal-bright); }
+.proj-chip + .proj-chip::before { content: '·'; margin-right: 10px; opacity: .4; }
+
+.proj-arrow {
+  font-size: 20px; color: rgba(7,25,46,.18); padding-top: 4px;
+  transition: color .3s, transform .3s;
+}
+.proj-trigger:hover .proj-arrow { color: var(--teal-bright); transform: translate(4px,-4px); }
+
+/* expand panel */
+.proj-panel {
+  display: none; background: var(--navy);
+  margin: 0 -64px; padding: 0 64px 0 156px;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+.proj-panel.open {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  padding: 52px 64px 52px 156px;
+  animation: panelIn .35s ease;
+}
+@keyframes panelIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+
+.panel-sec { font-family: var(--ff-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
+.panel-text { font-size: 13px; font-weight: 300; line-height: 1.85; color: rgba(255,255,255,.5); }
+.panel-text + .panel-text { margin-top: 12px; }
+.panel-big { font-family: var(--ff-display); font-size: 48px; font-weight: 300; color: #fff; line-height: 1; margin-bottom: 6px; }
+.panel-big-label { font-size: 11px; font-weight: 300; color: rgba(255,255,255,.35); letter-spacing: .06em; margin-bottom: 28px; }
+.panel-right { display: flex; flex-direction: column; }
+.panel-trade { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); border-radius: 4px; padding: 20px 24px; margin-top: 20px; }
+.panel-trade-label { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 10px; }
+.panel-trade-text { font-size: 12px; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,.45); font-style: italic; }
+.panel-diff { margin-top: 20px; }
+.panel-diff-label { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 10px; }
+.panel-diff-item { font-size: 12px; font-weight: 300; color: rgba(255,255,255,.4); line-height: 1.6; padding-left: 14px; position: relative; margin-bottom: 6px; }
+.panel-diff-item::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-size: 10px; }
+
+/* ── THINKING ── */
+#thinking { background: var(--cream-2); padding: 132px 64px; }
+.thinking-hd { margin-bottom: 72px; }
+.thinking-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
+.thought-card {
+  background: var(--cream); padding: 44px 40px;
+  transition: background .3s ease;
+}
+.thought-card:hover { background: #fff; }
+.thought-num {
+  font-family: var(--ff-display); font-size: 48px; font-weight: 300;
+  color: rgba(4, 4, 4, 0.61); line-height: 1; margin-bottom: 20px;
+}
+.thought-title {
+  font-family: var(--ff-display); font-size: 22px; font-weight: 400;
+  color: var(--navy); margin-bottom: 14px; line-height: 1.2;
+}
+.thought-title em { font-style: italic; color: var(--teal); }
+.thought-body { font-size: 13px; font-weight: 300; line-height: 1.85; color: var(--slate); }
+.thought-tag {
+  margin-top: 24px; display: inline-block;
+  font-family: var(--ff-mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--teal-mid);
+  border-bottom: 1px solid var(--teal-border); padding-bottom: 2px;
+}
+
+/* ── STATEMENT ── */
+#statement { background: var(--navy); padding: 120px 64px; }
+.statement-inner {
+  max-width: 960px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+}
+.statement-quote {
+  font-family: var(--ff-display); font-size: clamp(26px, 2.8vw, 40px);
+  font-weight: 300; line-height: 1.5; color: #fff;
+  padding-left: 28px; border-left: 2px solid var(--teal); position: relative;
+}
+.statement-quote em { font-style: italic; color: var(--teal-bright); }
+.statement-right {}
+.statement-body { font-size: 13px; font-weight: 300; line-height: 1.95; color: rgba(255,255,255,.5); margin-bottom: 36px; }
+.statement-goals { display: flex; flex-direction: column; gap: 0; }
+.goal-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.goal-item:first-child { border-top: 1px solid rgba(255,255,255,.06); }
+.goal-label {
+  font-family: var(--ff-mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--teal); min-width: 64px; padding-top: 2px;
+}
+.goal-text { font-size: 13px; font-weight: 300; color: rgba(255,255,255,.6); line-height: 1.5; }
+
+/* ── RECOGNITION ── */
+#recognition { background: var(--cream); padding: 132px 64px; }
+.rec-hd { margin-bottom: 64px; }
+.rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
+.rec-card {
+  background: var(--cream); padding: 44px 40px;
+  transition: background .3s;
+}
+.rec-card:hover { background: #fff; }
+.rec-glyph { font-size: 20px; margin-bottom: 20px; line-height: 1; color: var(--teal); opacity: .6; }
+.rec-title { font-family: var(--ff-display); font-size: 20px; font-weight: 400; color: var(--navy); margin-bottom: 6px; }
+.rec-sub { font-size: 10px; font-weight: 300; letter-spacing: .12em; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 16px; }
+.rec-body { font-size: 13px; font-weight: 300; line-height: 1.75; color: var(--slate); }
+
+/* ── CONTACT ── */
+#contact { background: var(--cream); padding: 140px 64px; text-align: center; position: relative; overflow: hidden; }
+.contact-watermark {
+  position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+  font-family: var(--ff-display); font-size: 220px; font-weight: 300;
+  color: rgba(7,25,46,.04); white-space: nowrap; pointer-events: none; user-select: none;
+}
+.contact-label { display: inline-block; margin-bottom: 24px; }
+.contact-title {
+  font-family: var(--ff-display); font-size: clamp(52px, 7vw, 104px);
+  font-weight: 300; color: var(--navy); margin-bottom: 20px; line-height: .95;
+}
+.contact-title em { font-style: italic; color: var(--teal); }
+.contact-sub { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--slate); margin-bottom: 52px; }
+.contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 400; letter-spacing: .05em;
+  padding: 14px 30px; border-radius: 2px; text-decoration: none;
+  transition: all .22s ease;
+}
+.btn-dark { background: var(--navy); color: #fff; border: 1px solid var(--navy); }
+.btn-dark:hover { background: var(--teal); border-color: var(--teal); }
+.btn-outline { background: transparent; color: var(--navy); border: 1px solid var(--border-mid); }
+.btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+.contact-meta { font-family: var(--ff-mono); font-size: 11px; color: var(--slate-light); margin-top: 44px; letter-spacing: .08em; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy); padding: 28px 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-l { font-family: var(--ff-display); font-size: 15px; font-weight: 400; color: rgba(255,255,255,.3); }
+.footer-r { font-family: var(--ff-mono); font-size: 10px; color: rgba(255,255,255,.18); letter-spacing: .1em; }
+
+/* ── SHARED UTILS ── */
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
+.counter { display: inline; }
+hr.div-line { border: none; border-top: 1px solid var(--border); margin: 0 64px; }
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Trisha Gupta</a>
+  <ul class="nav-links">
+    <li><a href="#work"><span class="nav-dot"></span>Work</a></li>
+    <li><a href="#thinking"><span class="nav-dot"></span>Thinking</a></li>
+    <li><a href="#about"><span class="nav-dot"></span>About</a></li>
+    <li>
+      <a href="trisha-gupta-cv.pdf" download="Trisha_Gupta_CV.pdf" class="nav-cv" title="Download CV">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M8 2v8m0 0L5 7m3 3 3-3M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Download CV
+      </a>
+    </li>
+    <li><a href="#contact" class="nav-contact">Say hello</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-accent-line"></div>
+
+  <p class="hero-eyebrow">Consultant · Strategist · MSc Business Analysis & Consulting · Strathclyde 2026</p>
+
+  <h1 class="hero-headline">
+    Complex problems.<br>
+    <span class="indent"><em>Structured</em> thinking.</span>
+  </h1>
+
+  <div class="hero-lower">
+    <p class="hero-intro">
+      I turn ambiguous, multi-layered problems into
+      <strong>clear decisions that stick.</strong> Across six live client engagements AI strategy, digital transformation, workforce analytics, data modelling, and strategic advisory the method is always the same: ask the right question first.
+    </p>
+    <div class="hero-proof">
+      <div>
+        <div class="hp-num">6</div>
+        <div class="hp-label">Live client<br>engagements</div>
+      </div>
+      <div>
+        <div class="hp-num">£80k+</div>
+        <div class="hp-label">Annual savings<br>identified</div>
+      </div>
+      <div>
+        <div class="hp-num">Top¼</div>
+        <div class="hp-label">Peer review<br>all projects</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker">
+    <span class="ticker-item">Business &amp; Digital Transformation <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">AI Strategy &amp; Governance <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Data Analysis <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Process Improvement <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Stakeholder Management <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Risk &amp; Controls <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Workshop Facilitation <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Python · Power BI · Excel <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Strategic Problem-Solving <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Client Deliverable Development <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Business &amp; Digital Transformation <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">AI Strategy &amp; Governance <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Data Analysis <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Process Improvement <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Stakeholder Management <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Risk &amp; Controls <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Workshop Facilitation <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Python · Power BI · Excel <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Strategic Problem-Solving <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Client Deliverable Development <span class="ticker-sep">·</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <div class="sec-label">About</div>
+    <h2 class="sec-title">The question<br>before the <em>answer</em></h2>
+    <p class="about-pull">
+      Most analysts arrive with the data. I arrive with
+      <em>the question the data needs to answer</em> — then work backwards.
+    </p>
+  </div>
+  <div class="about-right reveal d2">
+    <p class="about-body">
+      I'm completing my <strong>MSc in Business Analysis & Consulting</strong> at the University of Strathclyde Business School (graduating September 2026), building on four years of experience across consulting, operations, and data analysis. My work spans digital transformation, AI strategy, workforce analytics, and strategic advisory industries and problems deliberately chosen to be different.
+    </p>
+    <p class="about-body">
+      What connects everything: I think in structured frameworks but communicate in plain language. I can build a machine learning pipeline in the morning and present board-ready recommendations in the afternoon. I'm not a specialist in one domain I'm a generalist who goes deep fast.
+    </p>
+    <p class="about-body">
+      <strong>Short term:</strong> Consulting Analyst role from September 2026. <strong>Long term:</strong> My own consulting practice built on a personal brand grounded in clear thinking, honest analysis, and results that are genuinely measurable.
+    </p>
+    <div class="chip-cloud">
+      <span class="chip">Business Transformation</span>
+      <span class="chip">Digital Strategy</span>
+      <span class="chip">AI Governance</span>
+      <span class="chip">Data Analysis</span>
+      <span class="chip">Process Improvement</span>
+      <span class="chip">Python (ML)</span>
+      <span class="chip">Power BI</span>
+      <span class="chip">Advanced Excel</span>
+      <span class="chip">Workshop Facilitation</span>
+      <span class="chip">Strategic Advisory</span>
+    </div>
+  </div>
+</section>
+
+<hr class="div-line">
+
+<!-- NUMBERS -->
+<div id="numbers">
+  <div class="num-cell reveal">
+    <div class="num-val"><span class="counter" data-to="6">0</span></div>
+    <div class="num-desc">Live client engagements<br>before graduating</div>
+  </div>
+  <div class="num-cell reveal d1">
+    <div class="num-val">£<span class="counter" data-to="80">0</span><span class="u">k+</span></div>
+    <div class="num-desc">Annual savings identified<br>for a UK local authority</div>
+  </div>
+  <div class="num-cell reveal d2">
+    <div class="num-val"><span class="counter" data-to="91">0</span><span class="u">%</span></div>
+    <div class="num-desc">Predictive model accuracy<br>— NHS A&E early warning system</div>
+  </div>
+  <div class="num-cell reveal d3">
+    <div class="num-val">Top<span class="u">¼</span></div>
+    <div class="num-desc">Peer review score across<br>all 6 live consulting projects</div>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <div class="work-hd reveal">
+    <div>
+      <div class="sec-label">Selected work</div>
+      <h2 class="sec-title">Six problems.<br><em>One method.</em></h2>
+    </div>
+    <div class="work-count">06</div>
+  </div>
+
+  <!-- PROJECT 1 -->
+  <div class="proj-row">
+    <div class="proj-trigger" onclick="toggle('p1')">
+      <div class="proj-num">01</div>
+      <div>
+        <div class="proj-tag">AI Strategy · Digital Transformation · Public Sector</div>
+        <h3 class="proj-name">AI Adoption Strategy : Public Local Authority</h3>
+        <div class="proj-client">Confidential Public Sector Client · UK</div>
+        <p class="proj-brief">Mapped 10 council workflows end-to-end to identify where AI could create real value and where it couldn't. Delivered a phased implementation roadmap with GDPR governance controls that projected £80,000+ in annual savings and 3,000+ staff hours reclaimed.</p>
+        <div class="proj-chips">
+          <span class="proj-chip">£80k+ savings</span>
+          <span class="proj-chip">3,000+ hours reclaimed</span>
+          <span class="proj-chip">GDPR governance</span>
+          <span class="proj-chip">Human-in-the-loop safeguards</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </div>
+    <div class="proj-panel" id="p1">
+      <div>
+        <div class="panel-sec">The problem</div>
+        <p class="panel-text">A Public Local Authority wanted to adopt AI but had no framework for deciding where it was appropriate, safe, or valuable. The risk of getting it wrong GDPR violations, poor public service, political backlash was as significant as not acting at all.</p>
+        <div class="panel-big" style="margin-top:28px;">£80k+</div>
+        <div class="panel-big-label">Annual savings identified through targeted AI adoption</div>
+        <div class="panel-big">3,000+</div>
+        <div class="panel-big-label">Staff hours reclaimed per year</div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-sec">What was built</div>
+        <p class="panel-text">A 6-criteria prioritisation model scoring workflows against process complexity, volume, AI fit, and regulatory risk. FOI processing and complaints triage emerged as the highest-impact opportunities : clear, justifiable, defensible. A phased roadmap with embedded governance controls.</p>
+        <div class="panel-trade">
+          <div class="panel-trade-label">The key decision trade-off</div>
+          <div class="panel-trade-text">We could have recommended broader automation. We didn't. We scoped tightly to the use cases where AI genuinely reduces risk rather than creating new risk vectors and documented why each rejected use case was rejected. That transparency is what makes a governance framework trustworthy.</div>
+        </div>
+        <div class="panel-diff">
+          <div class="panel-diff-label">What I'd do differently</div>
+          <div class="panel-diff-item">Run a deeper staff sentiment survey earlier change management was underweighted at the start.</div>
+          <div class="panel-diff-item">Build the monitoring framework in parallel, not after the roadmap so governance is baked in, not bolted on.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div class="proj-row">
+    <div class="proj-trigger" onclick="toggle('p2')">
+      <div class="proj-num">02</div>
+      <div>
+        <div class="proj-tag">Risk & Controls · Governance · Deloitte Supervised</div>
+        <h3 class="proj-name">Enterprise Risk Framework : WB Alloys</h3>
+        <div class="proj-client">Manufacturing SME · UK Multi-Site · Deloitte Engagement</div>
+        <p class="proj-brief">Identified 85 previously unescalated safety risks buried in a single-point-of-failure system. Designed an ISO 31000-aligned framework with a centralised risk register, 5×5 scoring matrix, and three-tier governance structure, projecting a 74% reduction in reported safety risks.</p>
+        <div class="proj-chips">
+          <span class="proj-chip">85 risks surfaced</span>
+          <span class="proj-chip">74% projected risk reduction</span>
+          <span class="proj-chip">ISO 31000</span>
+          <span class="proj-chip">3-tier governance</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </div>
+    <div class="proj-panel" id="p2">
+      <div>
+        <div class="panel-sec">The problem</div>
+        <p class="panel-text">One person authorised all risk decisions across a multi-site UK manufacturing SME. 85 safety risks were completely unescalated not because management didn't care, but because the system had no language or structure to surface them. Glasgow accounted for 41% of all risk breaches.</p>
+        <div class="panel-big" style="margin-top:28px;">85</div>
+        <div class="panel-big-label">Previously invisible safety risks identified</div>
+        <div class="panel-big">74%</div>
+        <div class="panel-big-label">Projected reduction in reported safety risks</div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-sec">What was built</div>
+        <p class="panel-text">Centralised risk register · 5×5 scoring matrix · 3-tier escalation structure (Branch → SMT → Board) · Shared risk taxonomy built from the client's own documentation across six categories. A 3-phase implementation roadmap with score-based escalation triggers.</p>
+        <div class="panel-trade">
+          <div class="panel-trade-label">The key decision trade-off</div>
+          <div class="panel-trade-text">We built the taxonomy from the client's own language, not from ISO templates. This made adoption significantly easier but it meant more upfront qualitative work. The right trade-off: compliance frameworks fail when they feel foreign.</div>
+        </div>
+        <div class="panel-diff">
+          <div class="panel-diff-label">What I'd do differently</div>
+          <div class="panel-diff-item">Pilot the 5×5 matrix with branch managers before finalising calibration sessions would have reduced subjectivity in scoring.</div>
+          <div class="panel-diff-item">Pair the framework launch with a facilitated workshop at each site, not just documentation delivery.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 3 -->
+  <div class="proj-row">
+    <div class="proj-trigger" onclick="toggle('p3')">
+      <div class="proj-num">03</div>
+      <div>
+        <div class="proj-tag">Workforce Strategy · Operational Analytics · Deloitte</div>
+        <h3 class="proj-name">Workforce Strategy : UK Regional Police Force</h3>
+        <div class="proj-client">Public Sector · UK Regional Police · Deloitte Engagement</div>
+        <p class="proj-brief">Led quantitative FTE gap analysis across three regions, identifying approximately 28% understaffing in senior investigator roles. Crucially distinguished a skills and progression failure from a hiring problem, changing the entire strategic recommendation.</p>
+        <div class="proj-chips">
+          <span class="proj-chip">~28% understaffing diagnosed</span>
+          <span class="proj-chip">3 regions</span>
+          <span class="proj-chip">Client-ready deliverable</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </div>
+    <div class="proj-panel" id="p3">
+      <div>
+        <div class="panel-sec">The problem</div>
+        <p class="panel-text">Operational bottlenecks were being attributed to a recruitment gap. The data told a different story: the problem wasn't that they weren't hiring enough people it was that existing talent wasn't progressing. That distinction completely changes what you recommend.</p>
+        <div class="panel-big" style="margin-top:28px;">~28%</div>
+        <div class="panel-big-label">Understaffing in senior investigator roles the root cause</div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-sec">What was delivered</div>
+        <p class="panel-text">Structured rebalancing strategy covering digital upskilling pathways, accelerated promotion frameworks, and wellbeing initiatives. Delivered in client-ready format to senior stakeholders, with recommendations framed around what was actually causing the problem not what leadership had assumed.</p>
+        <div class="panel-trade">
+          <div class="panel-trade-label">The key decision trade-off</div>
+          <div class="panel-trade-text">We had to push back on the initial brief. The client came in expecting a recruitment strategy. We reframed the problem around progression failure that required careful stakeholder management to be received well, not defensively. Worth it.</div>
+        </div>
+        <div class="panel-diff">
+          <div class="panel-diff-label">What I'd do differently</div>
+          <div class="panel-diff-item">Involve frontline officers in the diagnostic earlier some progression barriers were cultural, not structural, and harder to see from data alone.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 4 -->
+  <div class="proj-row">
+    <div class="proj-trigger" onclick="toggle('p4')">
+      <div class="proj-num">04</div>
+      <div>
+        <div class="proj-tag">Data Analytics · Machine Learning · Life Sciences</div>
+        <h3 class="proj-name">Predictive Analytics : NHS A&E Early Warning System</h3>
+        <div class="proj-client">Science Engineered · NHS England · Life Sciences & Healthcare</div>
+        <p class="proj-brief">Built a Machine Learning early warning system for NHS A&E operations. Evaluated three classification models and selected Random Forest not for the highest accuracy, but for the lowest false negatives. In patient safety, missing a crisis is the worst possible outcome.</p>
+        <div class="proj-chips">
+          <span class="proj-chip">91% model accuracy</span>
+          <span class="proj-chip">Optimised for recall</span>
+          <span class="proj-chip">Full ML pipeline</span>
+          <span class="proj-chip">Board-ready output</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </div>
+    <div class="proj-panel" id="p4">
+      <div>
+        <div class="panel-sec">The problem</div>
+        <p class="panel-text">NHS A&E departments were managing crises reactively. The question wasn't "can we predict this?" it was "how do we translate complex model outputs into something a board can act on?" The technical work was only half the project.</p>
+        <div class="panel-big" style="margin-top:28px;">91%</div>
+        <div class="panel-big-label">Model accuracy : Random Forest classifier</div>
+        <div class="panel-big">1/144</div>
+        <div class="panel-big-label">Missed crisis predictions</div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-sec">What was built</div>
+        <p class="panel-text">ML-ready dataset with 6 engineered features including lagged performance indicators and rolling averages. Time-based train/test split to prevent data leakage. Three algorithms evaluated. Key finding: A&E crisis builds gradually it is structurally predictable if you look at the right signals.</p>
+        <div class="panel-trade">
+          <div class="panel-trade-label">The key decision trade-off</div>
+          <div class="panel-trade-text">Chose recall over accuracy. A false negative missing a crisis is catastrophically worse than a false positive in this context. That's a governance decision, not just a statistical one. The model selection was made with the end consequence in mind, not the leaderboard metric.</div>
+        </div>
+        <div class="panel-diff">
+          <div class="panel-diff-label">What I'd do differently</div>
+          <div class="panel-diff-item">Work with clinical staff earlier to validate the feature selection some engineered features might not reflect operational reality as they understand it.</div>
+          <div class="panel-diff-item">Build a live monitoring dashboard from the start, not just a static prediction output.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 5 -->
+  <div class="proj-row">
+    <div class="proj-trigger" onclick="toggle('p5')">
+      <div class="proj-num">05</div>
+      <div>
+        <div class="proj-tag">Sustainability Strategy · Procurement · ESG</div>
+        <h3 class="proj-name">Carbon Procurement Strategy : UK Residential Developer</h3>
+        <div class="proj-client">Property Development · Sustainability Advisory</div>
+        <p class="proj-brief">Built an LCA model quantifying 988 tCO₂e of embodied carbon across the supply chain. Designed an MCDA framework across three procurement scenarios, delivering a 34% emissions reduction recommendation that embedded sustainability as a weighted business criterion not an afterthought.</p>
+        <div class="proj-chips">
+          <span class="proj-chip">34% emissions reduction</span>
+          <span class="proj-chip">988 tCO₂e baseline</span>
+          <span class="proj-chip">MCDA framework</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </div>
+    <div class="proj-panel" id="p5">
+      <div>
+        <div class="panel-sec">The insight</div>
+        <p class="panel-text">Sustainability risk is procurement risk. The challenge was making that argument legible to a property developer who saw sustainability as a compliance cost, not a strategic lever. The LCA model gave us the numbers. The MCDA gave us the framework to put ESG alongside cost and quality as an equally weighted input.</p>
+        <div class="panel-big" style="margin-top:28px;">34%</div>
+        <div class="panel-big-label">Emissions reduction pathway identified</div>
+        <div class="panel-big">988</div>
+        <div class="panel-big-label">tCO₂e baseline quantified</div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-sec">What was built</div>
+        <p class="panel-text">Full Life Cycle Assessment (LCA) model across the supply chain. Multi-Criteria Decision Analysis framework integrating sustainability, cost, and quality across three procurement scenarios. Recommendation was specific, quantified, and grounded in the client's own commercial reality.</p>
+        <div class="panel-trade">
+          <div class="panel-trade-label">The key decision trade-off</div>
+          <div class="panel-trade-text">Scenario 1 gave the deepest emissions cut but was commercially unviable. We recommended Scenario 2, a 34% reduction that the business could actually implement. Idealism without practicality doesn't get adopted.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 6 -->
+  <div class="proj-row">
+    <div class="proj-trigger" onclick="toggle('p6')">
+      <div class="proj-num">06</div>
+      <div>
+        <div class="proj-tag">Strategic Advisory · Financial Modelling · SE Asia</div>
+        <h3 class="proj-name">Business Model Feasibility : STAHL (~$190M Cost Base)</h3>
+        <div class="proj-client">Strategic Advisory · South-East Asia</div>
+        <p class="proj-brief">Prevented a high-risk strategic pivot through data-backed modelling. Built end-to-end P&L, ROI, and scenario analysis across a ~$190M cost base. The value was in making the risk of the wrong decision financially legible to leadership before they committed to it.</p>
+        <div class="proj-chips">
+          <span class="proj-chip">$190M cost base</span>
+          <span class="proj-chip">Multi-scenario P&L</span>
+          <span class="proj-chip">Strategic pivot prevented</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </div>
+    <div class="proj-panel" id="p6">
+      <div>
+        <div class="panel-sec">The problem</div>
+        <p class="panel-text">Leadership had already decided they wanted to pivot. Our job was to tell them whether that instinct was right with the financial modelling to back up whichever answer the data supported. The answer was: the pivot would fail. The hybrid model was the right path.</p>
+        <div class="panel-big" style="margin-top:28px;">$190M</div>
+        <div class="panel-big-label">Cost base modelled across full P&L scenario analysis</div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-sec">What was delivered</div>
+        <p class="panel-text">End-to-end P&L model · Three-scenario stress test · ROI analysis across options · Hybrid model recommendation. The recommendation pushed back on leadership's preferred direction and was supported by data robust enough to make that conversation constructive rather than confrontational.</p>
+        <div class="panel-trade">
+          <div class="panel-trade-label">The key decision trade-off</div>
+          <div class="panel-trade-text">Delivering a recommendation leadership doesn't want to hear is the hardest part of consulting. The only way to do it effectively is to make the evidence undeniable and the alternative clearly better which is what the hybrid model achieved.</div>
+        </div>
+        <div class="panel-diff">
+          <div class="panel-diff-label">What I'd do differently</div>
+          <div class="panel-diff-item">Build the sensitivity analysis earlier and present it alongside the base case, not as a follow-up it makes the robustness of the recommendation more immediately credible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- THINKING -->
+<section id="thinking">
+  <div class="thinking-hd reveal">
+    <div class="sec-label">How I work</div>
+    <h2 class="sec-title">The things that<br>don't show up <em>in the work</em></h2>
+  </div>
+  <div class="thinking-grid">
+    <div class="thought-card reveal">
+      <div class="thought-num">01</div>
+      <h3 class="thought-title">Frame the problem<br><em>before</em> touching data</h3>
+      <p class="thought-body">The biggest consulting mistakes happen before the analysis starts when someone accepts the client's framing of the problem instead of stress-testing it. The NHS project found that A&E crises were structurally predictable. The police force project found that the real problem was progression failure, not recruitment. Neither of those insights came from the data. They came from asking the right question first.</p>
+      <span class="thought-tag">Problem framing</span>
+    </div>
+    <div class="thought-card reveal d1">
+      <div class="thought-num">02</div>
+      <h3 class="thought-title">Show the <em>fork in the road</em>,<br>not just the destination</h3>
+      <p class="thought-body">Every project has a moment where multiple paths were equally reasonable. I document those moments deliberately what options existed, what trade-offs they carried, and why the chosen path was preferred. That's the evidence of critical thinking that gets lost when portfolios only show the polished final output. The trade-off IS the work.</p>
+      <span class="thought-tag">Decision transparency</span>
+    </div>
+    <div class="thought-card reveal d2">
+      <div class="thought-num">03</div>
+      <h3 class="thought-title">Constraints aren't<br><em>excuses</em> — they're inputs</h3>
+      <p class="thought-body">Every engagement had real constraints: limited data, tight timelines, clients who weren't sure what they actually needed. The public sector AI project had strict GDPR guardrails that ruled out the most technically exciting solutions. The STAHL project required a recommendation leadership didn't want to hear. Effective consulting means working with those constraints, not around them.</p>
+      <span class="thought-tag">Constraint navigation</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section id="statement">
+  <div class="statement-inner">
+    <blockquote class="statement-quote reveal">
+      "I'm not a specialist in one domain. I'm a generalist who goes <em>deep fast</em> and communicates clearly on the way out."
+    </blockquote>
+    <div class="statement-right reveal d2">
+      <div class="sec-label" style="color:var(--teal)">Where I'm headed</div>
+      <p class="statement-body">
+        I want to build a consulting career grounded in structured thinking, honest analysis, and client results that are genuinely measurable not just deliverable. That means being the person in the room who can move between the data and the boardroom without losing either audience.
+      </p>
+      <div class="statement-goals">
+        <div class="goal-item">
+          <div class="goal-label">Now</div>
+          <div class="goal-text">General Consulting Analyst role Risk, Digital Transformation, Data & AI, or Strategy. Open from September 2026.</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-label">3 years</div>
+          <div class="goal-text">Senior consultant with a developed practice in digital transformation and AI strategy for organisations navigating real structural change.</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-label">Long term</div>
+          <div class="goal-text">My own practice. A personal brand built on a point of view not just a service menu. Work that speaks for itself.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOGNITION -->
+<section id="recognition">
+  <div class="rec-hd reveal">
+    <div class="sec-label">Recognition</div>
+    <h2 class="sec-title">Beyond the <em>brief</em></h2>
+  </div>
+  <div class="rec-grid">
+    <div class="rec-card reveal">
+      <div class="rec-glyph">◈</div>
+      <div class="rec-title">Entrepreneurial Excellence Winner</div>
+      <div class="rec-sub">Strathclyde Inspire 2026 · University-wide Competition</div>
+      <p class="rec-body">Identified a systemic inefficiency in industrial waste exchange between manufacturers. Built Symbiosis : a B2B circular economy platform connecting industrial waste with commercial raw material demand. Won a competitive university-wide pitch. Now scaling with a six-person founding team.</p>
+    </div>
+    <div class="rec-card reveal d1">
+      <div class="rec-glyph">◇</div>
+      <div class="rec-title">Top Quartile — All 6 Engagements</div>
+      <div class="rec-sub">MSc Peer Review · University of Strathclyde</div>
+      <p class="rec-body">Recognised in the top quartile across all six live consulting projects spanning AI strategy, risk, workforce analytics, and financial modelling. Consistent performance across diverse problem types, team structures, and client contexts.</p>
+    </div>
+    <div class="rec-card reveal d2">
+      <div class="rec-glyph">◉</div>
+      <div class="rec-title">TGIS Award</div>
+      <div class="rec-sub">Top National Sales Performance · Leverage Edu</div>
+      <p class="rec-body">Recognised for top national performance in a high-volume, KPI-driven advisory environment. A foundation in client-centric communication, conversion thinking, and results accountability that underpins the consulting work.</p>
+    </div>
+    <div class="rec-card reveal d3">
+      <div class="rec-glyph">◎</div>
+      <div class="rec-title">Urban Reforestation Lead</div>
+      <div class="rec-sub">The Nursery Club · 2021–2025 · 1,000+ trees</div>
+      <p class="rec-body">Led a 20-member volunteer team over four years. 1,000+ trees planted. Public engagement grew 30%. A reminder that good systems thinking whether in forests or organisations always starts with the long game and requires building the team around the mission.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-watermark">Hello.</div>
+  <div class="sec-label contact-label reveal">Let's talk</div>
+  <h2 class="contact-title reveal d1">Think we should<br><em>work together?</em></h2>
+  <p class="contact-sub reveal d2">
+    I'm open to consulting analyst and BA roles from September 2026.<br>
+    UK Graduate Visa commencing September 2026 · Currently Glasgow, relocating to London.
+  </p>
+  <div class="contact-btns reveal d3">
+    <a href="mailto:t.gupta.consulting@gmail.com" class="btn btn-dark">t.gupta.consulting@gmail.com</a>
+    <a href="https://linkedin.com/in/trisha-gupta-615b471b1" class="btn btn-outline" target="_blank">LinkedIn ↗</a>
+  </div>
+  <p class="contact-meta reveal d4">+44 7352 664596</p>
+</section>
+
+<footer>
+  <div class="footer-l">Trisha Gupta</div>
+  <div class="footer-r">Consultant · Strategist · Strathclyde MSc 2026</div>
+</footer>
+
+<script>
+// Cursor
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx+'px'; cur.style.top = my+'px'; });
+(function loop() { rx += (mx-rx)*.1; ry += (my-ry)*.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button,.proj-trigger').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+// Track how many dark sections are currently visible to avoid race condition
+let darkCount = 0;
+document.querySelectorAll('#hero, #numbers, #statement, footer').forEach(el => {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      darkCount = e.isIntersecting ? darkCount + 1 : Math.max(0, darkCount - 1);
+      document.body.classList.toggle('cursor-dark', darkCount > 0);
+    });
+  }, {threshold: 0.2});
+  obs.observe(el);
+});
+
+// Nav
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('stuck', window.scrollY > 50); });
+
+// Reveal
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); }});
+}, {threshold: .08});
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+// Counters
+function runCounter(el) {
+  const to = parseInt(el.dataset.to);
+  const dur = 1600;
+  const start = performance.now();
+  (function step(now) {
+    const p = Math.min((now-start)/dur, 1);
+    const e = 1 - Math.pow(1-p, 3);
+    el.textContent = Math.round(e * to);
+    if(p < 1) requestAnimationFrame(step);
+  })(start);
+}
+const cntObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.querySelectorAll('.counter').forEach(runCounter); cntObs.unobserve(e.target); }});
+}, {threshold: .25});
+document.querySelectorAll('#numbers').forEach(el => cntObs.observe(el));
+
+// Project expand
+let open = null;
+function toggle(id) {
+  const panel = document.getElementById(id);
+  if(open && open !== id) { document.getElementById(open).classList.remove('open'); }
+  const isOpen = panel.classList.toggle('open');
+  open = isOpen ? id : null;
+  if(isOpen) setTimeout(() => panel.scrollIntoView({behavior:'smooth', block:'nearest'}), 80);
+}
+
+// Active nav
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#'+e.target.id); });
+    }
+  });
+}, {threshold: .4});
+sections.forEach(s => secObs.observe(s));
+</script>
+</body>
+</html>
